@@ -2,9 +2,6 @@ package com.zo.kaijuadventure.presentation.components
 
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.AnimationSpec
-import androidx.compose.animation.core.RepeatMode
-import androidx.compose.animation.core.animate
-import androidx.compose.animation.core.infiniteRepeatable
 import androidx.compose.animation.core.keyframes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
@@ -17,10 +14,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import com.zo.kaijuadventure.R
-import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlin.math.roundToInt
@@ -52,12 +47,10 @@ fun Background(
                         animationSpec = shakeAnimation
                     )
                     delay(500)
-                }
+                }.also { onScreenShakeFinished() }
             }
 
             translationX.snapTo(0f)
-
-            onScreenShakeFinished()
         }
     }
 

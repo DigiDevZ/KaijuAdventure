@@ -42,7 +42,6 @@ fun PlayScreen(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             SceneDisplay(scene = state.scene, onIntroDone = {
-                //TODO: Need to debug why this isn't triggering the scene transition
                 viewModel.onSceneDone()
             })
         }
