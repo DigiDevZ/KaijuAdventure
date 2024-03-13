@@ -15,8 +15,6 @@ import com.zo.kaijuadventure.presentation.play_screen.PlayScreen
 import com.zo.kaijuadventure.presentation.play_screen.PlayScreenViewModel
 import com.zo.kaijuadventure.ui.theme.KaijuAdventureTheme
 
-const val TAG = "FastPrototype"
-
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
