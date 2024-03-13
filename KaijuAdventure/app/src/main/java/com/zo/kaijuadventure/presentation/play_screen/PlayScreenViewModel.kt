@@ -4,6 +4,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
+import com.zo.kaijuadventure.data.Choice
+import com.zo.kaijuadventure.data.EnterKaijuChoices
 import com.zo.kaijuadventure.data.Scenes
 import com.zo.kaijuadventure.util.baseLog
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -17,12 +19,11 @@ class PlayScreenViewModel : ViewModel() {
     var state by mutableStateOf(PlayScreenState())
         private set
 
-    fun onStart() {
+    fun onStart() {}
 
-    }
-
-    fun onSceneDone() {
+    fun onSceneDone(choice: Choice? = null) {
         _sceneEvents.value = SceneEvents.SceneDone
+        choice?.let { recordChoice(it) }
     }
 
     fun onSceneFinished() {
@@ -31,14 +32,31 @@ class PlayScreenViewModel : ViewModel() {
         transitionNextScene()
     }
 
+    private fun recordChoice(choice: Choice) {
+        val userChoices = state.userChoices.toMutableList()
+        userChoices.add(choice)
+        state = state.copy(userChoices = userChoices)
+    }
+
     private fun transitionNextScene() {
-        when (state.scene) {
-            Scenes.Intro -> Scenes.EnterKaiju
-            Scenes.EnterKaiju -> { }
+        state = when (state.scene) {
+            is Scenes.Intro -> state.copy(scene = Scenes.EnterKaiju())
+            is Scenes.EnterKaiju -> {
+                state.copy(scene = determineSubsceneFromChoices(0))
+            }
+            is Scenes.KaijuEncounter2 -> TODO()
+            is Scenes.KaijuEncounter3 -> TODO()
+            is Scenes.KaijuEncounter4 -> TODO()
+            is Scenes.Ending -> TODO()
         }
     }
 
-    fun onDispose() {
+    private fun determineSubsceneFromChoices(choiceIndex: Int) =
+        when (state.userChoices[choiceIndex]) {
+            is EnterKaijuChoices.Run -> Scenes.KaijuEncounter2.Scene2A("You run")
+            is EnterKaijuChoices.Hide -> Scenes.KaijuEncounter2.Scene2B("You hide")
+        }
 
-    }
+
+    fun onDispose() {}
 }
