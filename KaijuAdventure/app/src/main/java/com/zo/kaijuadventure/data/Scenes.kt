@@ -23,6 +23,8 @@ sealed class Scenes(open val dialogue: String) {
     sealed class KaijuEncounter4(override val dialogue: String) : Scenes(dialogue)
 
     sealed class Ending(override val dialogue: String) : Scenes(dialogue)
+}
 
-
+enum class SceneStates {
+    Typing, AwaitingInput,
 }

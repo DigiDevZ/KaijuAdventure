@@ -19,12 +19,9 @@ import androidx.compose.ui.res.stringResource
 import com.zo.kaijuadventure.R
 import com.zo.kaijuadventure.data.Choice
 import com.zo.kaijuadventure.data.EnterKaijuChoices
+import com.zo.kaijuadventure.data.SceneStates
 import com.zo.kaijuadventure.presentation.components.ChoicesPrompt
 import com.zo.kaijuadventure.presentation.components.TypewriterAnimatedText
-
-enum class EnterKaijuSceneStates {
-    Typing, AwaitingChoice,
-}
 
 @Composable
 fun EnterKaijuScene(
@@ -37,12 +34,12 @@ fun EnterKaijuScene(
         mutableStateOf(false)
     }
     var sceneState by remember {
-        mutableStateOf(EnterKaijuSceneStates.Typing)
+        mutableStateOf(SceneStates.Typing)
     }
 
     LaunchedEffect(key1 = typingAnimationDone) {
         if (typingAnimationDone) {
-            sceneState = EnterKaijuSceneStates.AwaitingChoice
+            sceneState = SceneStates.AwaitingInput
         }
     }
 
@@ -50,7 +47,7 @@ fun EnterKaijuScene(
         sceneState, label = ""
     ) { enterKaijuSceneStates ->
         when (enterKaijuSceneStates) {
-            EnterKaijuSceneStates.Typing -> {
+            SceneStates.Typing -> {
                 Column(
                     Modifier
                         .fillMaxSize()
@@ -66,7 +63,7 @@ fun EnterKaijuScene(
                         })
                 }
             }
-            EnterKaijuSceneStates.AwaitingChoice -> {
+            SceneStates.AwaitingInput -> {
                 Column(
                     Modifier
                         .fillMaxSize()

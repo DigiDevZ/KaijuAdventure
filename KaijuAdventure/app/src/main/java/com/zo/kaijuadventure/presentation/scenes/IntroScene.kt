@@ -17,12 +17,9 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import com.zo.kaijuadventure.data.SceneStates
 import com.zo.kaijuadventure.presentation.components.ContinousRadiatingRings
 import com.zo.kaijuadventure.presentation.components.TypewriterAnimatedText
-
-enum class IntroSceneStates {
-    Typing, AwaitingInput
-}
 
 @Composable
 fun IntroScene(
@@ -35,12 +32,12 @@ fun IntroScene(
     }
 
     var sceneState by remember {
-        mutableStateOf(IntroSceneStates.Typing)
+        mutableStateOf(SceneStates.Typing)
     }
 
     LaunchedEffect(key1 = animationDone) {
         if (animationDone) {
-            sceneState = IntroSceneStates.AwaitingInput
+            sceneState = SceneStates.AwaitingInput
         }
     }
 
@@ -48,7 +45,7 @@ fun IntroScene(
         sceneState, label = ""
     ) {
         when (it) {
-            IntroSceneStates.AwaitingInput -> {
+            SceneStates.AwaitingInput -> {
                 Column(
                     Modifier
                         .fillMaxSize()
@@ -77,7 +74,7 @@ fun IntroScene(
                 }
             }
 
-            IntroSceneStates.Typing -> {
+            SceneStates.Typing -> {
                 Column(
                     Modifier
                         .fillMaxSize()
