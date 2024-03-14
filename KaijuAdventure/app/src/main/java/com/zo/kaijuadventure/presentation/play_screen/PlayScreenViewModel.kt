@@ -6,6 +6,9 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import com.zo.kaijuadventure.data.Choice
 import com.zo.kaijuadventure.data.EnterKaijuChoices
+import com.zo.kaijuadventure.data.KaijuEncounter2Choices
+import com.zo.kaijuadventure.data.KaijuEncounter3Choices
+import com.zo.kaijuadventure.data.KaijuEncounter4Choices
 import com.zo.kaijuadventure.data.Scenes
 import com.zo.kaijuadventure.util.baseLog
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -40,14 +43,21 @@ class PlayScreenViewModel : ViewModel() {
 
     private fun transitionNextScene() {
         state = when (state.scene) {
-            is Scenes.Intro -> state.copy(scene = Scenes.EnterKaiju())
+            is Scenes.Intro -> state.copy(scene = Scenes.EnterKaiju(""))
             is Scenes.EnterKaiju -> {
                 state.copy(scene = determineSubsceneFromChoices(0))
             }
-            is Scenes.KaijuEncounter2 -> TODO()
-            is Scenes.KaijuEncounter3 -> TODO()
-            is Scenes.KaijuEncounter4 -> TODO()
-            is Scenes.Ending -> TODO()
+            is Scenes.KaijuEncounter2 -> {
+                state.copy(scene = determineSubsceneFromChoices(1))
+            }
+            is Scenes.KaijuEncounter3 -> {
+                state.copy(scene = determineSubsceneFromChoices(2))
+            }
+            is Scenes.KaijuEncounter4 -> {
+                state.copy(scene = determineSubsceneFromChoices(3))
+            }
+            is Scenes.Ending -> state.copy(scene = Scenes.GameOver())
+            else -> { state }
         }
     }
 
@@ -55,6 +65,15 @@ class PlayScreenViewModel : ViewModel() {
         when (state.userChoices[choiceIndex]) {
             is EnterKaijuChoices.Run -> Scenes.KaijuEncounter2.Scene2A("You run")
             is EnterKaijuChoices.Hide -> Scenes.KaijuEncounter2.Scene2B("You hide")
+
+            is KaijuEncounter2Choices.Explore -> Scenes.KaijuEncounter3.Scene2A("You Explore")
+            is KaijuEncounter2Choices.Watch -> Scenes.KaijuEncounter3.Scene2B("You Watch")
+
+            is KaijuEncounter3Choices.ScreamBack -> Scenes.KaijuEncounter4.Scene2A("You Scream Back")
+            is KaijuEncounter3Choices.StaySilent -> Scenes.KaijuEncounter4.Scene2B("You Stay Silent")
+
+            is KaijuEncounter4Choices.Acceptance -> Scenes.Ending("You Accept The Inevitable")
+            is KaijuEncounter4Choices.Fight -> Scenes.Ending("You Fight")
         }
 
 

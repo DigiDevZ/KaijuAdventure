@@ -4,7 +4,7 @@ import com.zo.kaijuadventure.data.Choice
 import com.zo.kaijuadventure.data.Scenes
 
 data class PlayScreenState(
-    val scene: Scenes = Scenes.Intro(),
+    val scene: Scenes = Scenes.Intro(""),
     val userChoices: List<Choice> = listOf()
 )
 

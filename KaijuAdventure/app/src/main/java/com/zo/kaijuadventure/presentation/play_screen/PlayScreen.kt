@@ -16,6 +16,7 @@ import com.zo.kaijuadventure.data.Scenes
 import com.zo.kaijuadventure.presentation.components.Background
 import com.zo.kaijuadventure.presentation.scenes.EnterKaijuScene
 import com.zo.kaijuadventure.presentation.scenes.IntroScene
+import com.zo.kaijuadventure.presentation.scenes.KaijuEncounter2Scene
 
 @Composable
 fun PlayScreen(
@@ -57,9 +58,10 @@ fun SceneDisplay(
     when (scene) {
         is Scenes.Intro -> IntroScene(onIntroDone = { onSceneDone(null) })
         is Scenes.EnterKaiju -> EnterKaijuScene(onSceneDone = onSceneDone)
-        is Scenes.KaijuEncounter2 -> TODO()
+        is Scenes.KaijuEncounter2 -> KaijuEncounter2Scene(scene = scene) { onSceneDone(it) }
         is Scenes.KaijuEncounter3 -> TODO()
         is Scenes.KaijuEncounter4 -> TODO()
         is Scenes.Ending -> TODO()
+        is Scenes.GameOver -> TODO()
     }
 }
