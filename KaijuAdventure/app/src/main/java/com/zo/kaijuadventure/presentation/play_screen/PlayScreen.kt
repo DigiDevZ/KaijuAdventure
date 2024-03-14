@@ -14,8 +14,13 @@ import androidx.compose.ui.graphics.Color
 import com.zo.kaijuadventure.data.Choice
 import com.zo.kaijuadventure.data.Scenes
 import com.zo.kaijuadventure.presentation.components.Background
+import com.zo.kaijuadventure.presentation.scenes.Ending
 import com.zo.kaijuadventure.presentation.scenes.EnterKaijuScene
+import com.zo.kaijuadventure.presentation.scenes.GameOver
 import com.zo.kaijuadventure.presentation.scenes.IntroScene
+import com.zo.kaijuadventure.presentation.scenes.KaijuEncounter2Scene
+import com.zo.kaijuadventure.presentation.scenes.KaijuEncounter3Scene
+import com.zo.kaijuadventure.presentation.scenes.KaijuEncounter4Scene
 
 @Composable
 fun PlayScreen(
@@ -57,9 +62,10 @@ fun SceneDisplay(
     when (scene) {
         is Scenes.Intro -> IntroScene(onIntroDone = { onSceneDone(null) })
         is Scenes.EnterKaiju -> EnterKaijuScene(onSceneDone = onSceneDone)
-        is Scenes.KaijuEncounter2 -> TODO()
-        is Scenes.KaijuEncounter3 -> TODO()
-        is Scenes.KaijuEncounter4 -> TODO()
-        is Scenes.Ending -> TODO()
+        is Scenes.KaijuEncounter2 -> KaijuEncounter2Scene(scene = scene) { onSceneDone(it) }
+        is Scenes.KaijuEncounter3 -> KaijuEncounter3Scene(scene = scene) { onSceneDone(it) }
+        is Scenes.KaijuEncounter4 -> KaijuEncounter4Scene(scene = scene) { onSceneDone(it) }
+        is Scenes.Ending -> Ending { onSceneDone(null) }
+        is Scenes.GameOver -> GameOver()
     }
 }

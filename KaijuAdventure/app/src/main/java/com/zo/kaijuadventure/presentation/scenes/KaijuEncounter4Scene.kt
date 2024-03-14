@@ -15,21 +15,19 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.stringResource
-import com.zo.kaijuadventure.R
 import com.zo.kaijuadventure.data.Choice
-import com.zo.kaijuadventure.data.EnterKaijuChoices
+import com.zo.kaijuadventure.data.KaijuEncounter4Choices
 import com.zo.kaijuadventure.data.SceneStates
+import com.zo.kaijuadventure.data.Scenes
 import com.zo.kaijuadventure.presentation.components.ChoicesPrompt
 import com.zo.kaijuadventure.presentation.components.TypewriterAnimatedText
 
 @Composable
-fun EnterKaijuScene(
+fun KaijuEncounter4Scene(
+    scene: Scenes.KaijuEncounter4,
     onSceneDone: (Choice) -> Unit,
 ) {
-    val message = listOf("What were those rumbles!!!\n\nA Kaiju...oh..no..it's....\n\n${stringResource(
-        id = R.string.kaiju_1
-    )}!!!!!!")
+    val message = listOf(scene.dialogue)
     var typingAnimationDone by remember {
         mutableStateOf(false)
     }
@@ -45,8 +43,8 @@ fun EnterKaijuScene(
 
     AnimatedContent(
         sceneState, label = ""
-    ) { enterKaijuSceneStates ->
-        when (enterKaijuSceneStates) {
+    ) { sceneStates ->
+        when (sceneStates) {
             SceneStates.Typing -> {
                 Column(
                     Modifier
@@ -81,7 +79,7 @@ fun EnterKaijuScene(
                     Spacer(modifier = Modifier.weight(1f))
 
                     ChoicesPrompt(
-                        choices = EnterKaijuChoices.toList()
+                        choices = KaijuEncounter4Choices.toList()
                     ) { choice ->
                         onSceneDone(choice)
                     }
@@ -91,5 +89,4 @@ fun EnterKaijuScene(
             }
         }
     }
-
 }

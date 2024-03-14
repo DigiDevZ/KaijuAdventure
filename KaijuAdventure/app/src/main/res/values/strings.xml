@@ -9,4 +9,13 @@
     <string name="enter_kaiju_choice_2">Hide</string>
     <string name="user_prompt_message">What will you do?</string>
 
+    <string name="kaiju_encounter_2_choice_1">Watch</string>
+    <string name="kaiju_encounter_2_choice_2">Explore</string>
+
+    <string name="kaiju_encounter_3_choice_1">Scream Back</string>
+    <string name="kaiju_encounter_3_choice_2">Stay Silent</string>
+
+    <string name="kaiju_encounter_4_choice_1">Fight!!</string>
+    <string name="kaiju_encounter_4_choice_2">Accept the inevitable</string>
+
 </resources>
