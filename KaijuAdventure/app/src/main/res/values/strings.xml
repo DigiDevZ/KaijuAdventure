@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">KaijuAdventure</string>
+
+    <string name="kaiju_1">Godzilla</string>
+    <string name="kaiju_2">Direzilla</string>
+
+
+    <string name="enter_kaiju_choice_1">Run</string>
+    <string name="enter_kaiju_choice_2">Hide</string>
+    <string name="user_prompt_message">What will you do?</string>
+
 </resources>
