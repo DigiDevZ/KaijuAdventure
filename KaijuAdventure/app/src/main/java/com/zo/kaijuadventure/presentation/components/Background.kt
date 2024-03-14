@@ -41,7 +41,7 @@ fun Background(
             }
 
             launch {
-                repeat(5) {
+                repeat(3) {
                     translationX.animateTo(
                         targetValue = 0f,
                         animationSpec = shakeAnimation
