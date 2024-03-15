@@ -27,6 +27,10 @@ class PlayScreenViewModel : ViewModel() {
         transitionNextScene()
     }
 
+    fun onKaijuIntroduced() {
+        _sceneEvents.value = SceneEvents.None
+    }
+
     private fun recordChoice(choice: Choice) {
         val userChoices = state.userChoices.toMutableList()
         userChoices.add(choice)
@@ -37,18 +41,25 @@ class PlayScreenViewModel : ViewModel() {
         state = when (state.scene) {
             is Scenes.Intro -> state.copy(scene = Scenes.EnterKaiju("What were those rumbles!!!\n\nA Kaiju...oh..no..it's....\n\nGodzilla!!!!!!"))
             is Scenes.EnterKaiju -> {
+                _sceneEvents.value = SceneEvents.KaijuEvent(KaijuEvents.Introduce)
                 state.copy(scene = determineSubsceneFromChoices(0))
             }
             is Scenes.Encounter2 -> {
+                _sceneEvents.value = SceneEvents.KaijuEvent(KaijuEvents.Stomp)
                 state.copy(scene = determineSubsceneFromChoices(1))
             }
             is Scenes.Encounter3 -> {
+                _sceneEvents.value = SceneEvents.KaijuEvent(KaijuEvents.DisplaySpecial)
                 state.copy(scene = determineSubsceneFromChoices(2))
             }
             is Scenes.Encounter4 -> {
+                _sceneEvents.value = SceneEvents.KaijuEvent(KaijuEvents.Jump)
                 state.copy(scene = determineSubsceneFromChoices(3))
             }
-            is Scenes.Ending -> state.copy(scene = Scenes.GameOver())
+            is Scenes.Ending -> {
+                _sceneEvents.value = SceneEvents.KaijuEvent(KaijuEvents.Exit)
+                state.copy(scene = Scenes.GameOver())
+            }
             else -> { state }
         }
     }

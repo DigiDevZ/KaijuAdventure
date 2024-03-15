@@ -10,7 +10,10 @@ data class PlayScreenState(
 
 sealed class SceneEvents {
     data object SceneDone : SceneEvents()
-    //Can hold messages
-    data object SceneAlert : SceneEvents()
+    data class KaijuEvent(val event: KaijuEvents) : SceneEvents()
     data object None : SceneEvents()
+}
+
+enum class KaijuEvents {
+    Introduce, Jump, Stomp, Exit, DisplaySpecial
 }
