@@ -10,7 +10,7 @@ data class PlayScreenState(
 )
 
 sealed class SceneEvents {
-    data object SceneDone : SceneEvents()
+    data object SceneChoiceSubmitted : SceneEvents()
     data class KaijuEvent(val event: KaijuEvents) : SceneEvents()
     data object None : SceneEvents()
 }

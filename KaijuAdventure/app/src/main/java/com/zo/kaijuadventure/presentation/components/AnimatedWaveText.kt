@@ -28,14 +28,14 @@ fun AnimatedWaveText(text: String, modifier: Modifier = Modifier) {
         LaunchedEffect(key1 = text) {
             while (true) {
                 charOffsets.forEachIndexed { index, animatable ->
-                    delay(index * 5L)//Delay affects the speed of the wave
+                    delay(index * 2L)//Delay affects the speed of the wave
                     animatable.animateTo(
                         targetValue = -20f,
-                        animationSpec = tween(durationMillis = 250)
+                        animationSpec = tween(durationMillis = 150)
                     )
                     animatable.animateTo(
                         targetValue = 0f,
-                        animationSpec = tween(durationMillis = 250)
+                        animationSpec = tween(durationMillis = 150)
                     )
                 }
             }

@@ -18,8 +18,8 @@ class PlayScreenViewModel : ViewModel() {
     var state by mutableStateOf(PlayScreenState())
         private set
 
-    fun onSceneDone(choice: StoryChoice? = null) {
-        _sceneEvents.value = SceneEvents.SceneDone
+    fun onSceneChoiceSubmitted(choice: StoryChoice? = null) {
+        _sceneEvents.value = SceneEvents.SceneChoiceSubmitted
         choice?.let { recordChoice(it) }
     }
 
@@ -33,9 +33,8 @@ class PlayScreenViewModel : ViewModel() {
     }
 
     private fun recordChoice(choice: StoryChoice) {
-        val userChoices = state.userChoices.toMutableList()
-        userChoices.add(choice)
-        state = state.copy(userChoices = userChoices)
+        state = state.copy(userChoices = state.userChoices.toMutableList()
+            .apply { add(choice) })
     }
 
     private fun transitionStoryState() {
@@ -43,7 +42,7 @@ class PlayScreenViewModel : ViewModel() {
             StoryState.Intro -> {
                 state = state.copy(
                     storyState = StoryState.Story,
-                    currentStoryNode = setupStoryFlowWithNodes()
+                    currentStoryNode = getStory()
                 )
             }
             StoryState.Story -> { transitionNextStoryNode() }
@@ -57,14 +56,16 @@ class PlayScreenViewModel : ViewModel() {
             lastChoice.nextNode?.let { nextStoryNode ->
                 state = state.copy(
                     currentStoryNode = nextStoryNode,
-                    storyState = if (nextStoryNode.choices.isEmpty()) StoryState.Ending else state.storyState
+                    storyState = nextStoryNode.choices.isEmpty().let { leafNode ->
+                        if (leafNode) StoryState.Ending else state.storyState
+                    }
                 )
             }
         } ?: { baseLog(message = "User choices are null") }
     }
 
     //Only keeping this in the codebase until we get remote data + repository setup
-    private fun setupStoryFlowWithNodes() : StoryNode {
+    private fun getStory() : StoryNode {
         //Intro is more of a game start, can be abstract
         //EnterKaiju -> Ending is all unique to the story relevant
         //GameOver is abstract like Intro
