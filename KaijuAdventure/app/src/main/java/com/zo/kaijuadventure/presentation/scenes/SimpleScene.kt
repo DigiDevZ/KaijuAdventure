@@ -15,7 +15,6 @@ fun SimpleScene(
     text: String,
     onSceneDone: (() -> Unit)? = null
 ) {
-    val message = listOf(text)
     Column(
         Modifier
             .fillMaxSize()
@@ -24,7 +23,7 @@ fun SimpleScene(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         TypewriterAnimatedText(
-            texts = message,
+            text = text,
             playAnimation = true,
             onAnimationDone = {
                 onSceneDone?.invoke()

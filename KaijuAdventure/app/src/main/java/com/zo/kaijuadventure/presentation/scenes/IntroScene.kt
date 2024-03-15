@@ -25,7 +25,7 @@ import com.zo.kaijuadventure.presentation.components.TypewriterAnimatedText
 fun IntroScene(
     onIntroDone: () -> Unit,
 ) {
-    val message = listOf("Welcome to the game.\n\nAre you ready?\n\nTap below.")
+    val message = "Welcome to the game.\n\nAre you ready?\n\nTap below."
 
     var animationDone by remember {
         mutableStateOf(false)
@@ -55,7 +55,7 @@ fun IntroScene(
                 ) {
                     Spacer(modifier = Modifier.weight(0.5f))
                     TypewriterAnimatedText(
-                        texts = message,
+                        text = message,
                         playAnimation = false,
                         onAnimationDone = {}
                     )
@@ -83,7 +83,7 @@ fun IntroScene(
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     TypewriterAnimatedText(
-                        texts = message,
+                        text = message,
                         playAnimation = true,
                         onAnimationDone = {
                             animationDone = true
