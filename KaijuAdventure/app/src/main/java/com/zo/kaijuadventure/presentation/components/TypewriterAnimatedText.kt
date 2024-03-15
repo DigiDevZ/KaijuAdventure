@@ -22,35 +22,26 @@ import kotlinx.coroutines.delay
 
 @Composable
 fun TypewriterAnimatedText(
-    texts: List<String>,
+    text: String,
     playAnimation: Boolean,
     onAnimationDone: () -> Unit
 ) {
-    //Requirements
-    // Cursor should be visible where text is being displayed
-    var textIndex by remember {
-        mutableIntStateOf(0)
-    }
     var textToDisplay by remember {
         mutableStateOf(
-            if (playAnimation) "" else texts.toString().replace(regex= """\[|\]""".toRegex(), replacement = ""))
+            if (playAnimation) "" else text.replace(regex= """\[|\]""".toRegex(), replacement = ""))
     }
 
-    LaunchedEffect(key1 = texts) {
+    LaunchedEffect(key1 = text) {
         if (playAnimation) {
-            delay(2000)
-            texts.forEach { _ ->
-                texts[textIndex].forEachIndexed { charIndex, _ ->
-                    textToDisplay = texts[textIndex]
-                        .substring(
-                            startIndex = 0,
-                            endIndex = charIndex + 1,
-                        )
-                    delay(160)
-                }
-                textIndex = textIndex++
-                delay(1000)
+            delay(1250)
+            text.forEachIndexed { charIndex, _ ->
+                textToDisplay = text.substring(
+                    startIndex = 0,
+                    endIndex = charIndex + 1,
+                )
+                delay(160)
             }
+            delay(500)
             onAnimationDone()
         }
     }

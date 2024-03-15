@@ -27,7 +27,7 @@ fun EncounterScene(
     choices: List<Choice>,
     onSceneDone: (Choice) -> Unit,
 ) {
-    val message = listOf(scene.dialogue)
+    val message = scene.dialogue
     var typingAnimationDone by remember {
         mutableStateOf(false)
     }
@@ -54,7 +54,7 @@ fun EncounterScene(
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     TypewriterAnimatedText(
-                        texts = message,
+                        text = message,
                         playAnimation = true,
                         onAnimationDone = {
                             typingAnimationDone = true
@@ -71,7 +71,7 @@ fun EncounterScene(
                 ) {
                     Spacer(modifier = Modifier.weight(0.5f))
                     TypewriterAnimatedText(
-                        texts = message,
+                        text = message,
                         playAnimation = false,
                         onAnimationDone = {}
                     )
