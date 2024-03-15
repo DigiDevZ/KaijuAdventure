@@ -18,4 +18,7 @@
     <string name="kaiju_encounter_4_choice_1">Fight!!</string>
     <string name="kaiju_encounter_4_choice_2">Accept the inevitable</string>
 
+    <string name="godzilla_ending">"Godzilla walks off into the ocean…the rampage is over\n\nFor now…    "</string>
+
+    <string name="game_over_message">Game Over\n\nDare to play again?</string>
 </resources>

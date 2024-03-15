@@ -27,7 +27,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.zo.kaijuadventure.R
 import com.zo.kaijuadventure.data.Choice
-import com.zo.kaijuadventure.data.EnterKaijuChoices
 
 @Composable
 fun ChoicesPrompt(
@@ -88,7 +87,7 @@ fun AnimatedChoicesPrompt(
 fun PreviewChoicesPrompt() {
     Box {
         ChoicesPrompt(
-            choices = listOf(EnterKaijuChoices.Run(), EnterKaijuChoices.Hide())
+            choices = listOf(Choice.Run, Choice.Hide)
         ) { }
     }
 }

@@ -11,8 +11,11 @@ import androidx.compose.ui.graphics.Color
 import com.zo.kaijuadventure.presentation.components.TypewriterAnimatedText
 
 @Composable
-fun GameOver() {
-    val message = listOf("Game Over\n\nDare to play again?")
+fun SimpleScene(
+    text: String,
+    onSceneDone: (() -> Unit)? = null
+) {
+    val message = listOf(text)
     Column(
         Modifier
             .fillMaxSize()
@@ -23,7 +26,9 @@ fun GameOver() {
         TypewriterAnimatedText(
             texts = message,
             playAnimation = true,
-            onAnimationDone = {}
+            onAnimationDone = {
+                onSceneDone?.invoke()
+            }
         )
     }
 }
