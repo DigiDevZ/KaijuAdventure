@@ -2,36 +2,18 @@ package com.zo.kaijuadventure.data
 
 import com.zo.kaijuadventure.R
 
-sealed class Choice(open val stringResId: Int)
-
-sealed class EnterKaijuChoices(override val stringResId: Int) : Choice(stringResId = stringResId) {
-    companion object {
-        fun toList() = listOf(Run(), Hide())
-    }
-    class Run(override val stringResId: Int = R.string.enter_kaiju_choice_1) : EnterKaijuChoices(stringResId = stringResId)
-    class Hide(override val stringResId: Int = R.string.enter_kaiju_choice_2) : EnterKaijuChoices(stringResId = stringResId)
+enum class Choice(val stringResId: Int) {
+    Run(R.string.enter_kaiju_choice_1),
+    Hide(R.string.enter_kaiju_choice_2),
+    Watch(R.string.kaiju_encounter_2_choice_1),
+    Explore(R.string.kaiju_encounter_2_choice_2),
+    ScreamBack(R.string.kaiju_encounter_3_choice_1),
+    StaySilent(R.string.kaiju_encounter_3_choice_2),
+    Fight(R.string.kaiju_encounter_4_choice_1),
+    Acceptance(R.string.kaiju_encounter_4_choice_2)
 }
 
-sealed class KaijuEncounter2Choices(override val stringResId: Int) : Choice(stringResId = stringResId) {
-    companion object {
-        fun toList() = listOf(Watch(), Explore())
-    }
-    class Watch(override val stringResId: Int = R.string.kaiju_encounter_2_choice_1) : KaijuEncounter2Choices(stringResId = stringResId)
-    class Explore(override val stringResId: Int = R.string.kaiju_encounter_2_choice_2) : KaijuEncounter2Choices(stringResId = stringResId)
-}
-
-sealed class KaijuEncounter3Choices(override val stringResId: Int) : Choice(stringResId = stringResId) {
-    companion object {
-        fun toList() = listOf(ScreamBack(), StaySilent())
-    }
-    class ScreamBack(override val stringResId: Int = R.string.kaiju_encounter_3_choice_1) : KaijuEncounter3Choices(stringResId = stringResId)
-    class StaySilent(override val stringResId: Int = R.string.kaiju_encounter_3_choice_2) : KaijuEncounter3Choices(stringResId = stringResId)
-}
-
-sealed class KaijuEncounter4Choices(override val stringResId: Int) : Choice(stringResId = stringResId) {
-    companion object {
-        fun toList() = listOf(Fight(), Acceptance())
-    }
-    class Fight(override val stringResId: Int = R.string.kaiju_encounter_4_choice_1) : KaijuEncounter4Choices(stringResId = stringResId)
-    class Acceptance(override val stringResId: Int = R.string.kaiju_encounter_4_choice_2) : KaijuEncounter4Choices(stringResId = stringResId)
-}
+fun enterKaijuChoices() = listOf(Choice.Run, Choice.Hide)
+fun kaijuEncounter2Choices() = listOf(Choice.Watch, Choice.Explore)
+fun kaijuEncounter3Choices() = listOf(Choice.ScreamBack, Choice.StaySilent)
+fun kaijuEncounter4Choices() = listOf(Choice.Fight, Choice.Acceptance)

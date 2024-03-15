@@ -6,21 +6,22 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
+import com.zo.kaijuadventure.R
 import com.zo.kaijuadventure.data.Choice
 import com.zo.kaijuadventure.data.Scenes
+import com.zo.kaijuadventure.data.enterKaijuChoices
+import com.zo.kaijuadventure.data.kaijuEncounter2Choices
+import com.zo.kaijuadventure.data.kaijuEncounter3Choices
+import com.zo.kaijuadventure.data.kaijuEncounter4Choices
 import com.zo.kaijuadventure.presentation.components.Background
-import com.zo.kaijuadventure.presentation.scenes.Ending
-import com.zo.kaijuadventure.presentation.scenes.EnterKaijuScene
-import com.zo.kaijuadventure.presentation.scenes.GameOver
+import com.zo.kaijuadventure.presentation.scenes.EncounterScene
 import com.zo.kaijuadventure.presentation.scenes.IntroScene
-import com.zo.kaijuadventure.presentation.scenes.KaijuEncounter2Scene
-import com.zo.kaijuadventure.presentation.scenes.KaijuEncounter3Scene
-import com.zo.kaijuadventure.presentation.scenes.KaijuEncounter4Scene
+import com.zo.kaijuadventure.presentation.scenes.SimpleScene
 
 @Composable
 fun PlayScreen(
@@ -28,11 +29,6 @@ fun PlayScreen(
 ) {
     val state = viewModel.state
     val sceneEvents = viewModel.sceneEvents.collectAsState().value
-
-    DisposableEffect(key1 = viewModel) {
-        viewModel.onStart()
-        onDispose { viewModel.onDispose() }
-    }
     
     Box(modifier = Modifier.fillMaxSize()) {
         Background(shakeScreen = sceneEvents == SceneEvents.SceneDone) {
@@ -61,11 +57,31 @@ fun SceneDisplay(
 ) {
     when (scene) {
         is Scenes.Intro -> IntroScene(onIntroDone = { onSceneDone(null) })
-        is Scenes.EnterKaiju -> EnterKaijuScene(onSceneDone = onSceneDone)
-        is Scenes.KaijuEncounter2 -> KaijuEncounter2Scene(scene = scene) { onSceneDone(it) }
-        is Scenes.KaijuEncounter3 -> KaijuEncounter3Scene(scene = scene) { onSceneDone(it) }
-        is Scenes.KaijuEncounter4 -> KaijuEncounter4Scene(scene = scene) { onSceneDone(it) }
-        is Scenes.Ending -> Ending { onSceneDone(null) }
-        is Scenes.GameOver -> GameOver()
+
+        is Scenes.EnterKaiju -> EncounterScene(
+            scene = scene,
+            choices = enterKaijuChoices()
+        ) { onSceneDone(it) }
+
+        is Scenes.Encounter2 -> EncounterScene(
+            scene = scene,
+            choices = kaijuEncounter2Choices()
+        ) { onSceneDone(it) }
+
+        is Scenes.Encounter3 -> EncounterScene(
+            scene = scene,
+            choices = kaijuEncounter3Choices()
+        ) { onSceneDone(it) }
+
+        is Scenes.Encounter4 -> EncounterScene(
+            scene = scene,
+            choices = kaijuEncounter4Choices()
+        ) { onSceneDone(it) }
+
+        is Scenes.Ending -> SimpleScene(text = "${scene.dialogue}\n\n${stringResource(R.string.godzilla_ending)}") {
+            onSceneDone(null)
+        }
+
+        is Scenes.GameOver -> SimpleScene(text = stringResource(R.string.game_over_message))
     }
 }
