@@ -29,9 +29,13 @@ fun PlayScreen(
 ) {
     val state = viewModel.state
     val sceneEvents = viewModel.sceneEvents.collectAsState().value
-    
+
     Box(modifier = Modifier.fillMaxSize()) {
-        Background(shakeScreen = sceneEvents == SceneEvents.SceneDone) {
+        Background(
+            shakeScreen = sceneEvents == SceneEvents.SceneDone,
+            kaijuEvent = sceneEvents as? SceneEvents.KaijuEvent,
+            onKaijuIntroduced = viewModel::onKaijuIntroduced,
+        ) {
             viewModel.onSceneFinished()
         }
 
