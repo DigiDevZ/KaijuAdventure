@@ -15,19 +15,18 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import com.zo.kaijuadventure.data.Choice
-import com.zo.kaijuadventure.data.SceneStates
-import com.zo.kaijuadventure.data.Scenes
+import com.zo.kaijuadventure.data.StoryChoice
 import com.zo.kaijuadventure.presentation.components.ChoicesPrompt
 import com.zo.kaijuadventure.presentation.components.TypewriterAnimatedText
+import com.zo.kaijuadventure.presentation.play_screen.SceneStates
+import com.zo.kaijuadventure.util.baseLog
 
 @Composable
 fun EncounterScene(
-    scene: Scenes,
-    choices: List<Choice>,
-    onSceneDone: (Choice) -> Unit,
+    storyText: String,
+    choices: List<StoryChoice>,
+    onSceneDone: (StoryChoice) -> Unit,
 ) {
-    val message = scene.dialogue
     var typingAnimationDone by remember {
         mutableStateOf(false)
     }
@@ -35,10 +34,20 @@ fun EncounterScene(
         mutableStateOf(SceneStates.Typing)
     }
 
+    var choiceChosen by remember {
+        mutableStateOf(false)
+    }
+
     LaunchedEffect(key1 = typingAnimationDone) {
         if (typingAnimationDone) {
             sceneState = SceneStates.AwaitingInput
+            typingAnimationDone = false
         }
+    }
+    
+    LaunchedEffect(key1 = storyText) {
+        sceneState = SceneStates.Typing
+        choiceChosen = false
     }
 
     AnimatedContent(
@@ -54,7 +63,7 @@ fun EncounterScene(
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     TypewriterAnimatedText(
-                        text = message,
+                        text = storyText,
                         playAnimation = true,
                         onAnimationDone = {
                             typingAnimationDone = true
@@ -71,20 +80,24 @@ fun EncounterScene(
                 ) {
                     Spacer(modifier = Modifier.weight(0.5f))
                     TypewriterAnimatedText(
-                        text = message,
+                        text = storyText,
                         playAnimation = false,
                         onAnimationDone = {}
                     )
 
                     Spacer(modifier = Modifier.weight(1f))
 
-                    ChoicesPrompt(
-                        choices = choices
-                    ) { choice ->
-                        onSceneDone(choice)
-                    }
+                    if (!choiceChosen) {
+                        //Fade out animation would be nice here
+                        ChoicesPrompt(
+                            choices = choices
+                        ) { choice ->
+                            choiceChosen = true
+                            onSceneDone(choice)
+                        }
 
-                    Spacer(modifier = Modifier.weight(0.5f))
+                        Spacer(modifier = Modifier.weight(0.5f))
+                    }
                 }
             }
         }

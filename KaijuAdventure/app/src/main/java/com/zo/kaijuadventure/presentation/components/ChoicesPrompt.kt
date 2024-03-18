@@ -21,12 +21,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.zo.kaijuadventure.R
-import com.zo.kaijuadventure.data.Choice
+import com.zo.kaijuadventure.data.StoryChoice
 
 @Composable
 fun ChoicesPrompt(
-    choices: List<Choice>,
-    onChoiceClick: (Choice) -> Unit,
+    choices: List<StoryChoice>,
+    onChoiceClick: (StoryChoice) -> Unit,
 ) {
     Column(
         modifier = Modifier
@@ -45,7 +45,7 @@ fun ChoicesPrompt(
                 modifier = Modifier.clickable {
                     onChoiceClick(choices[index])
                 },
-                text = stringResource(id = it.stringResId),
+                text = it.choiceText,
                 color = Color.White,
                 fontWeight = FontWeight.Bold,
                 fontSize = 20.sp,
@@ -65,7 +65,7 @@ fun ChoicesPrompt(
 fun PreviewChoicesPrompt() {
     Box {
         ChoicesPrompt(
-            choices = listOf(Choice.Run, Choice.Hide)
+            choices = listOf()
         ) { }
     }
 }

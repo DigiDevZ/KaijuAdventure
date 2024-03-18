@@ -1,5 +1,6 @@
 package com.zo.kaijuadventure.presentation.components
 
+import android.annotation.SuppressLint
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.AnimationSpec
@@ -34,6 +35,7 @@ import kotlinx.coroutines.launch
 import kotlin.math.roundToInt
 import kotlin.random.Random
 
+@SuppressLint("UnusedBoxWithConstraintsScope")
 @Composable
 fun Background(
     shakeScreen: Boolean,

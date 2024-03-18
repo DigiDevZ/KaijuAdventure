@@ -7,9 +7,12 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
+import com.zo.kaijuadventure.data.StoryChoice
+import com.zo.kaijuadventure.data.StoryNode
 import com.zo.kaijuadventure.presentation.play_screen.PlayScreen
 import com.zo.kaijuadventure.presentation.play_screen.PlayScreenViewModel
 import com.zo.kaijuadventure.ui.theme.KaijuAdventureTheme
+import com.zo.kaijuadventure.util.baseLog
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,4 +33,5 @@ class MainActivity : ComponentActivity() {
         }
     }
 }
+
 
