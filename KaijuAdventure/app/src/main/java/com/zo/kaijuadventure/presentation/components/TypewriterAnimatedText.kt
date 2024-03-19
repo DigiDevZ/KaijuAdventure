@@ -27,8 +27,7 @@ fun TypewriterAnimatedText(
     onAnimationDone: () -> Unit
 ) {
     var textToDisplay by remember {
-        mutableStateOf(
-            if (playAnimation) "" else text.replace(regex= """[\[\]]""".toRegex(), replacement = ""))
+        mutableStateOf(if (playAnimation) "" else text)
     }
 
     LaunchedEffect(key1 = text) {
