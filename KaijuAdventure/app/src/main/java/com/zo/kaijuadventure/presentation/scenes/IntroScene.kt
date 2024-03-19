@@ -17,9 +17,9 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import com.zo.kaijuadventure.data.SceneStates
 import com.zo.kaijuadventure.presentation.components.ContinousRadiatingRings
 import com.zo.kaijuadventure.presentation.components.TypewriterAnimatedText
+import com.zo.kaijuadventure.presentation.play_screen.SceneStates
 
 @Composable
 fun IntroScene(

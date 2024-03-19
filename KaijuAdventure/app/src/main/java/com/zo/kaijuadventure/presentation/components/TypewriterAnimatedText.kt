@@ -39,7 +39,7 @@ fun TypewriterAnimatedText(
                     startIndex = 0,
                     endIndex = charIndex + 1,
                 )
-                delay(160)
+                delay(120)
             }
             delay(500)
             onAnimationDone()
