@@ -27,9 +27,9 @@ fun PlayScreen(
     val state = viewModel.state
     val sceneEvents = viewModel.sceneEvents.collectAsState().value
 
-    Box(modifier = Modifier.fillMaxSize()) {
+    Box(modifier = Modifier.fillMaxSize().background(Color.DarkGray)) {
         Background(
-            shakeScreen = sceneEvents == SceneEvents.SceneDone,
+            shakeScreen = sceneEvents == SceneEvents.SceneChoiceSubmitted,
             kaijuEvent = sceneEvents as? SceneEvents.KaijuEvent,
             onKaijuIntroduced = viewModel::onKaijuIntroduced,
         ) {
@@ -47,9 +47,9 @@ fun PlayScreen(
             SceneDisplay(
                 storyNode = state.currentStoryNode,
                 storyState = state.storyState,
-                onSceneDone = { choice ->
-                    viewModel.onSceneDone(choice)
-                })
+                onSceneChoiceSubmitted = { choice ->
+                viewModel.onSceneChoiceSubmitted(choice)
+            })
         }
     }
 }
@@ -58,21 +58,21 @@ fun PlayScreen(
 fun SceneDisplay(
     storyNode: StoryNode?,
     storyState: StoryState,
-    onSceneDone: (StoryChoice?) -> Unit,
+    onSceneChoiceSubmitted: (StoryChoice?) -> Unit,
 ) {
     when (storyState) {
-        StoryState.Intro -> IntroScene(onIntroDone = { onSceneDone(null) })
+        StoryState.Intro -> IntroScene(onIntroDone = { onSceneChoiceSubmitted(null) })
         StoryState.Story -> storyNode?.let {
             EncounterScene(
                 storyText = it.storyText,
                 choices = it.choices
             ) { storyChoice ->
-                onSceneDone(storyChoice)
+                onSceneChoiceSubmitted(storyChoice)
             }
         } ?: Text(text = "Null StoryNode")
 
         StoryState.Ending -> SimpleScene(text = "${storyNode?.storyText}\n\n${stringResource(R.string.godzilla_ending)}") {
-            onSceneDone(null)
+            onSceneChoiceSubmitted(null)
         }
 
         StoryState.GameOver -> SimpleScene(text = stringResource(R.string.game_over_message))
