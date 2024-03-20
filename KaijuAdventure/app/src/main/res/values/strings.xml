@@ -21,4 +21,7 @@
     <string name="godzilla_ending">"Godzilla walks off into the ocean…the rampage is over\n\nFor now…    "</string>
 
     <string name="game_over_message">Game Over\n\nDare to play again?</string>
+    <string name="kaiju_adventure">Kaiju Adventure</string>
+    <string name="start">Start</string>
+    <string name="retry">Retry</string>
 </resources>

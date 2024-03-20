@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
     alias(libs.plugins.kotlinXSerialization)
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -63,6 +64,11 @@ dependencies {
     implementation(libs.kotlin.coroutines.core)
 
     implementation(libs.kotlinx.serialization.json)
+
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.firestore)
+
+    implementation(libs.arrow.core)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
