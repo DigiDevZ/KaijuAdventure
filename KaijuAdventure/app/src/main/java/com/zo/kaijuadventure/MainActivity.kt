@@ -9,7 +9,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import com.google.firebase.Firebase
 import com.google.firebase.firestore.firestore
-import com.zo.kaijuadventure.data.StoryRepositoryImpl
+import com.zo.kaijuadventure.data.repository.StoryRepositoryImpl
 import com.zo.kaijuadventure.presentation.play_screen.PlayScreen
 import com.zo.kaijuadventure.presentation.play_screen.PlayScreenViewModel
 import com.zo.kaijuadventure.ui.theme.KaijuAdventureTheme

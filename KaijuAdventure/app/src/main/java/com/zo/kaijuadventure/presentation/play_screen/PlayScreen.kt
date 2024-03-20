@@ -25,9 +25,9 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.zo.kaijuadventure.R
-import com.zo.kaijuadventure.data.StoryChoice
-import com.zo.kaijuadventure.data.StoryNode
-import com.zo.kaijuadventure.data.mapBaseError
+import com.zo.kaijuadventure.data.model.StoryChoice
+import com.zo.kaijuadventure.data.model.StoryNode
+import com.zo.kaijuadventure.data.model.mapBaseError
 import com.zo.kaijuadventure.presentation.components.AnimatedWaveText
 import com.zo.kaijuadventure.presentation.components.Background
 import com.zo.kaijuadventure.presentation.scenes.EncounterScene

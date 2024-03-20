@@ -1,4 +1,4 @@
-package com.zo.kaijuadventure.data
+package com.zo.kaijuadventure.data.model
 
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.encodeToString

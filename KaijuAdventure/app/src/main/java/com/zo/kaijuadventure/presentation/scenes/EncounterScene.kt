@@ -10,7 +10,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import com.zo.kaijuadventure.data.StoryChoice
+import com.zo.kaijuadventure.data.model.StoryChoice
 import com.zo.kaijuadventure.presentation.components.CenteredContentColumn
 import com.zo.kaijuadventure.presentation.components.ChoicesPrompt
 import com.zo.kaijuadventure.presentation.components.TypewriterAnimatedText

@@ -2,9 +2,9 @@ package com.zo.kaijuadventure.presentation.play_screen
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.zo.kaijuadventure.data.QueryError
-import com.zo.kaijuadventure.data.StoryChoice
-import com.zo.kaijuadventure.data.StoryRepository
+import com.zo.kaijuadventure.data.model.QueryError
+import com.zo.kaijuadventure.data.model.StoryChoice
+import com.zo.kaijuadventure.data.repository.StoryRepository
 import com.zo.kaijuadventure.util.baseLog
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

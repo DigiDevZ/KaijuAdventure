@@ -1,8 +1,8 @@
 package com.zo.kaijuadventure.presentation.play_screen
 
-import com.zo.kaijuadventure.data.BaseError
-import com.zo.kaijuadventure.data.StoryChoice
-import com.zo.kaijuadventure.data.StoryNode
+import com.zo.kaijuadventure.data.model.BaseError
+import com.zo.kaijuadventure.data.model.StoryChoice
+import com.zo.kaijuadventure.data.model.StoryNode
 
 data class PlayScreenState(
     val gameState: GameState = GameState.Menu,

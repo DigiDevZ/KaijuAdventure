@@ -1,7 +1,9 @@
-package com.zo.kaijuadventure.data
+package com.zo.kaijuadventure.data.repository
 
 import arrow.core.Either
 import com.google.firebase.firestore.FirebaseFirestore
+import com.zo.kaijuadventure.data.model.QueryError
+import com.zo.kaijuadventure.data.model.StoryNode
 import kotlinx.coroutines.tasks.await
 import kotlinx.serialization.json.Json
 

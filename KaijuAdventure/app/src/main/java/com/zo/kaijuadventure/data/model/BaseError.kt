@@ -1,4 +1,4 @@
-package com.zo.kaijuadventure.data
+package com.zo.kaijuadventure.data.model
 
 interface BaseError
 
