@@ -61,6 +61,7 @@ fun PlayScreen(
                 onKaijuIntroduced = viewModel::onKaijuIntroduced,
                 onSceneFinished = viewModel::onSceneFinished,
                 onSceneChoiceSubmitted = viewModel::onSceneChoiceSubmitted,
+                onGameRestart = viewModel::onGameRestart
             )
         }
 
@@ -133,7 +134,8 @@ fun GameContent(
     storyState: StoryState,
     onKaijuIntroduced: () -> Unit,
     onSceneFinished: () -> Unit,
-    onSceneChoiceSubmitted: (StoryChoice?) -> Unit
+    onSceneChoiceSubmitted: (StoryChoice?) -> Unit,
+    onGameRestart: () -> Unit
 ) {
     Background(
         shakeScreen = sceneEvents == SceneEvents.SceneChoiceSubmitted,
@@ -153,7 +155,8 @@ fun GameContent(
         SceneDisplay(
             storyNode = currentStoryNode,
             storyState = storyState,
-            onSceneChoiceSubmitted = onSceneChoiceSubmitted
+            onSceneChoiceSubmitted = onSceneChoiceSubmitted,
+            onGameRestart = onGameRestart
         )
     }
 }
@@ -163,6 +166,7 @@ fun SceneDisplay(
     storyNode: StoryNode?,
     storyState: StoryState,
     onSceneChoiceSubmitted: (StoryChoice?) -> Unit,
+    onGameRestart: () -> Unit,
 ) {
     when (storyState) {
         StoryState.Intro -> IntroScene(onIntroDone = { onSceneChoiceSubmitted(null) })
@@ -179,6 +183,9 @@ fun SceneDisplay(
             onSceneChoiceSubmitted(null)
         }
 
-        StoryState.GameOver -> SimpleScene(text = stringResource(R.string.game_over_message))
+        StoryState.GameOver -> SimpleScene(
+            text = stringResource(R.string.game_over_message),
+            onClick = onGameRestart
+        )
     }
 }
