@@ -173,7 +173,7 @@ fun SceneDisplay(
             ) { storyChoice ->
                 onSceneChoiceSubmitted(storyChoice)
             }
-        } ?: Text(text = "Null StoryNode")
+        }
 
         StoryState.Ending -> SimpleScene(text = "${storyNode?.storyText}\n\n${stringResource(R.string.godzilla_ending)}") {
             onSceneChoiceSubmitted(null)

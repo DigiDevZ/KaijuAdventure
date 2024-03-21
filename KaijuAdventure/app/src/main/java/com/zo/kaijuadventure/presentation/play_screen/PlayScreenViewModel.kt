@@ -71,8 +71,11 @@ class PlayScreenViewModel(
 
     private fun transitionStoryState() {
         when (_state.value.storyState) {
-            StoryState.Intro -> { _state.value = _state.value.copy(storyState = StoryState.Story) }
-            StoryState.Story -> { transitionNextStoryNode() }
+            StoryState.Intro -> {
+                _sceneEvents.value = SceneEvents.KaijuEvent(KaijuEvents.Introduce)
+                _state.value = _state.value.copy(storyState = StoryState.Story)
+            }
+            StoryState.Story -> transitionNextStoryNode()
             StoryState.Ending ->  _state.value =  _state.value.copy(storyState = StoryState.GameOver)
             StoryState.GameOver ->  _state.value =  _state.value.copy(storyState = StoryState.Intro)
         }
@@ -84,7 +87,13 @@ class PlayScreenViewModel(
                 _state.value = _state.value.copy(
                     currentStoryNode = nextStoryNode,
                     storyState = nextStoryNode.choices.isEmpty().let { leafNode ->
-                        if (leafNode) StoryState.Ending else  _state.value.storyState
+                        if (leafNode) {
+                            _sceneEvents.value = SceneEvents.KaijuEvent(KaijuEvents.Exit)
+                            StoryState.Ending
+                        } else {
+                            _sceneEvents.value = SceneEvents.KaijuEvent(KaijuEvents.Jump)
+                            _state.value.storyState
+                        }
                     }
                 )
             }

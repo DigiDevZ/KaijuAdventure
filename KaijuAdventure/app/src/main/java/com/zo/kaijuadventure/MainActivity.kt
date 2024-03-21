@@ -18,7 +18,6 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        //Might want to add hilt this week
         val storyRepository = StoryRepositoryImpl(Firebase.firestore)
         val playScreenViewModel = PlayScreenViewModel(storyRepository)
 
