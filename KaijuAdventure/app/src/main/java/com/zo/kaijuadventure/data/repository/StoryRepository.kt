@@ -18,15 +18,16 @@ class StoryRepositoryImpl(
     companion object {
         const val STORY_COLLECTION_PATH = "story"
         const val GODZILLA_STORY = "godzilla_story"
+        const val STORY_NODES_FIELD = "storyNodes"
     }
 
     override suspend fun queryStory(id: String): Either<QueryError, StoryNode> =
         Either.catch {
             val result=
                 firestore.collection(STORY_COLLECTION_PATH).document(GODZILLA_STORY).get().await()
-            Json.decodeFromString<StoryNode>(result.data?.get("storyNodes").toString())
+            Json.decodeFromString<StoryNode>(result.data?.get(STORY_NODES_FIELD).toString())
         }.mapLeft {
-            QueryError(it.message ?: "Story query failed with no error message")
+            QueryError(it.message ?: "Failed to load story, please check internet and try again.")
         }
 
 }

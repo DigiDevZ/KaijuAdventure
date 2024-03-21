@@ -1,10 +1,28 @@
 package com.zo.kaijuadventure.data.model
 
+import android.content.Context
+import com.zo.kaijuadventure.R
+import com.zo.kaijuadventure.presentation.components.ErrorHandling
+
+
 interface BaseError
 
-fun BaseError.mapBaseError() = when (this) {
+fun BaseError.mapErrorMessage(context: Context) = when (this) {
     is QueryError -> this.message
-    else -> "Unknown Error Occurred"
+    else -> context.getString(R.string.unknown_error_occurred)
+}
+
+fun BaseError.mapErrorHandling(context: Context, errorHandlingAction: () -> Unit): ErrorHandling = when (this) {
+    is QueryError -> ErrorHandling(
+        errorText = this.mapErrorMessage(context),
+        errorActionText =  context.getString(R.string.retry),
+        onErrorAction = { errorHandlingAction() }
+    )
+    else -> ErrorHandling(
+        errorText = this.mapErrorMessage(context),
+        errorActionText = context.getString(R.string.clear),
+        onErrorAction = { errorHandlingAction() }
+    )
 }
 
 
