@@ -7,31 +7,29 @@ import com.zo.kaijuadventure.data.model.StoryChoice
 import com.zo.kaijuadventure.data.repository.StoryRepository
 import com.zo.kaijuadventure.util.baseLog
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
 class PlayScreenViewModel(
     private val storyRepository: StoryRepository
 ) : ViewModel() {
 
-    private val _sceneEvents = MutableStateFlow<SceneEvents>(SceneEvents.None)
-    val sceneEvents: StateFlow<SceneEvents> = _sceneEvents
-
-    private val _state = MutableStateFlow(PlayScreenState())
-    val state: StateFlow<PlayScreenState> = _state
+    var sceneEvents = MutableStateFlow<SceneEvents>(SceneEvents.None)
+        private set
+    var state = MutableStateFlow(PlayScreenState())
+        private set
 
     fun onStart() {
         loadStory()
     }
 
     fun onClearUIError() {
-        when (_state.value.uiError) {
+        when (state.value.uiError) {
             is QueryError -> {
-                _state.value = _state.value.copy(uiError = null)
+                state.value = state.value.copy(uiError = null)
                 loadStory()
             }
             else -> {
-                _state.value = _state.value.copy(uiError = null)
+                state.value = state.value.copy(uiError = null)
             }
         }
     }
@@ -39,64 +37,68 @@ class PlayScreenViewModel(
     private fun loadStory() {
         viewModelScope.launch {
             storyRepository.queryStory().onLeft {
-                _state.value = _state.value.copy(uiError = it)
+                state.value = state.value.copy(uiError = it)
             }.onRight { queriedStoryNode ->
-                _state.value = _state.value.copy(currentStoryNode = queriedStoryNode)
+                state.value = state.value.copy(currentStoryNode = queriedStoryNode)
             }
         }
     }
 
     fun onPlayGame() {
-        _state.value = _state.value.copy(gameState = GameState.Game)
+        state.value = state.value.copy(gameState = GameState.Game)
     }
 
     fun onSceneChoiceSubmitted(choice: StoryChoice? = null) {
-        _sceneEvents.value = SceneEvents.SceneChoiceSubmitted
+        sceneEvents.value = SceneEvents.SceneChoiceSubmitted
         choice?.let { recordChoice(it) }
     }
 
     fun onSceneFinished() {
-        _sceneEvents.value = SceneEvents.None
+        sceneEvents.value = SceneEvents.None
         transitionStoryState()
     }
 
     fun onKaijuIntroduced() {
-        _sceneEvents.value = SceneEvents.None
+        sceneEvents.value = SceneEvents.None
     }
 
     private fun recordChoice(choice: StoryChoice) {
-        _state.value = _state.value.copy(userChoices = _state.value.userChoices.toMutableList()
+        state.value = state.value.copy(userChoices = state.value.userChoices.toMutableList()
             .apply { add(choice) })
     }
 
     private fun transitionStoryState() {
-        when (_state.value.storyState) {
+        when (state.value.storyState) {
             StoryState.Intro -> {
-                _sceneEvents.value = SceneEvents.KaijuEvent(KaijuEvents.Introduce)
-                _state.value = _state.value.copy(storyState = StoryState.Story)
+                sceneEvents.value = SceneEvents.KaijuEvent(KaijuEvents.Introduce)
+                state.value = state.value.copy(storyState = StoryState.Story)
             }
             StoryState.Story -> transitionNextStoryNode()
-            StoryState.Ending ->  _state.value =  _state.value.copy(storyState = StoryState.GameOver)
-            StoryState.GameOver ->  _state.value =  _state.value.copy(storyState = StoryState.Intro)
+            StoryState.Ending ->  state.value =  state.value.copy(storyState = StoryState.GameOver)
+            StoryState.GameOver ->  state.value =  state.value.copy(storyState = StoryState.Intro)
         }
     }
 
     private fun transitionNextStoryNode() {
-        _state.value.userChoices.lastOrNull()?.let { lastChoice ->
+        state.value.userChoices.lastOrNull()?.let { lastChoice ->
             lastChoice.nextNode?.let { nextStoryNode ->
-                _state.value = _state.value.copy(
+                state.value = state.value.copy(
                     currentStoryNode = nextStoryNode,
                     storyState = nextStoryNode.choices.isEmpty().let { leafNode ->
                         if (leafNode) {
-                            _sceneEvents.value = SceneEvents.KaijuEvent(KaijuEvents.Exit)
+                            sceneEvents.value = SceneEvents.KaijuEvent(KaijuEvents.Exit)
                             StoryState.Ending
                         } else {
-                            _sceneEvents.value = SceneEvents.KaijuEvent(KaijuEvents.Jump)
-                            _state.value.storyState
+                            sceneEvents.value = SceneEvents.KaijuEvent(KaijuEvents.Jump)
+                            state.value.storyState
                         }
                     }
                 )
             }
         } ?: { baseLog(message = "User choices are null") }
+    }
+
+    fun onGameRestart() {
+        state.value = state.value.copy(gameState = GameState.Menu, userChoices = listOf())
     }
 }
