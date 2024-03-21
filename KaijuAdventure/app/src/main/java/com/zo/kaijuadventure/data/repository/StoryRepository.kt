@@ -8,7 +8,7 @@ import kotlinx.coroutines.tasks.await
 import kotlinx.serialization.json.Json
 
 interface StoryRepository {
-    suspend fun queryStory(id: String = "") : Either<QueryError, StoryNode?>
+    suspend fun queryStory(id: String = "") : Either<QueryError, StoryNode>
 }
 
 class StoryRepositoryImpl(
@@ -20,8 +20,7 @@ class StoryRepositoryImpl(
         const val GODZILLA_STORY = "godzilla_story"
     }
 
-
-    override suspend fun queryStory(id: String): Either<QueryError, StoryNode?> =
+    override suspend fun queryStory(id: String): Either<QueryError, StoryNode> =
         Either.catch {
             val result=
                 firestore.collection(STORY_COLLECTION_PATH).document(GODZILLA_STORY).get().await()

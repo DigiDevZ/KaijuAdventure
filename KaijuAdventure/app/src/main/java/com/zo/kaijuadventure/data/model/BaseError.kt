@@ -3,7 +3,6 @@ package com.zo.kaijuadventure.data.model
 interface BaseError
 
 fun BaseError.mapBaseError() = when (this) {
-    //Sealed class would be stronger here
     is QueryError -> this.message
     else -> "Unknown Error Occurred"
 }
