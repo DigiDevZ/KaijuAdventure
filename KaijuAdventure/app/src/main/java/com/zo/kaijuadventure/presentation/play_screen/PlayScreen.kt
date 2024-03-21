@@ -179,9 +179,7 @@ fun SceneDisplay(
             }
         }
 
-        StoryState.Ending -> SimpleScene(text = "${storyNode?.storyText}\n\n${stringResource(R.string.godzilla_ending)}") {
-            onSceneChoiceSubmitted(null)
-        }
+        StoryState.Ending -> SimpleScene(text = "${storyNode?.storyText}\n\n${stringResource(R.string.godzilla_ending)}", onSceneDone = { onSceneChoiceSubmitted(null) })
 
         StoryState.GameOver -> SimpleScene(
             text = stringResource(R.string.game_over_message),
