@@ -32,13 +32,14 @@ fun TypewriterAnimatedText(
 
     LaunchedEffect(key1 = text) {
         if (playAnimation) {
+            val words = text.split("\\s+".toRegex())
             delay(1250)
-            text.forEachIndexed { charIndex, _ ->
-                textToDisplay = text.substring(
-                    startIndex = 0,
-                    endIndex = charIndex + 1,
-                )
-                delay(120)
+            words.forEachIndexed { wordIndex, _ ->
+                textToDisplay = words.subList(
+                    fromIndex = 0,
+                    toIndex = wordIndex + 1
+                ).toString().replace("[\\[\\],]".toRegex(), "")
+                delay(350)
             }
             delay(500)
             onAnimationDone()
