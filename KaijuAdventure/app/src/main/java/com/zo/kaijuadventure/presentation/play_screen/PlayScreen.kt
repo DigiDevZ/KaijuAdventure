@@ -18,6 +18,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -38,6 +39,7 @@ import com.zo.kaijuadventure.presentation.scenes.SimpleScene
 fun PlayScreen(
     viewModel: PlayScreenViewModel
 ) {
+    val context = LocalContext.current
     val state = viewModel.state.collectAsState().value
     val sceneEvents = viewModel.sceneEvents.collectAsState().value
 
@@ -47,8 +49,8 @@ fun PlayScreen(
     }
 
     BaseScreen(
-        loading = state.loading,
-        errorHandling = state.uiError?.mapErrorHandling {
+        loadingTrigger = state.loading,
+        errorHandling = state.uiError?.mapErrorHandling(context) {
             viewModel.onClearUIError()
         }
     ) {
