@@ -11,7 +11,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
@@ -27,7 +26,8 @@ import androidx.compose.ui.unit.sp
 import com.zo.kaijuadventure.R
 import com.zo.kaijuadventure.data.model.StoryChoice
 import com.zo.kaijuadventure.data.model.StoryNode
-import com.zo.kaijuadventure.data.model.mapBaseError
+import com.zo.kaijuadventure.data.model.mapErrorHandling
+import com.zo.kaijuadventure.presentation.base.BaseScreen
 import com.zo.kaijuadventure.presentation.components.AnimatedWaveText
 import com.zo.kaijuadventure.presentation.components.Background
 import com.zo.kaijuadventure.presentation.scenes.EncounterScene
@@ -46,52 +46,29 @@ fun PlayScreen(
         onDispose {  }
     }
 
-    Box(modifier = Modifier
-        .fillMaxSize()
-        .background(Color.DarkGray)
-    ) {
-        when (state.gameState) {
-            GameState.Menu -> MenuContent(
-                onPlayGame = viewModel::onPlayGame,
-            )
-            GameState.Game -> GameContent(
-                sceneEvents = sceneEvents,
-                currentStoryNode = state.currentStoryNode,
-                storyState = state.storyState,
-                onKaijuIntroduced = viewModel::onKaijuIntroduced,
-                onSceneFinished = viewModel::onSceneFinished,
-                onSceneChoiceSubmitted = viewModel::onSceneChoiceSubmitted,
-                onGameRestart = viewModel::onGameRestart
-            )
+    BaseScreen(
+        loading = state.loading,
+        errorHandling = state.uiError?.mapErrorHandling {
+            viewModel.onClearUIError()
         }
-
-        if (state.uiError != null) {
-            Column(
-                modifier = Modifier
-                    //A full screen blurred background would be nicer here
-                    .background(
-                        Color.Black,
-                        shape = RoundedCornerShape(corner = CornerSize(20.dp))
-                    )
-                    .padding(48.dp)
-                    .align(Alignment.Center),
-                verticalArrangement = Arrangement.SpaceEvenly,
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                Text(
-                    modifier = Modifier.padding(16.dp),
-                    text = state.uiError.mapBaseError(),
-                    color = Color.White,
-                    fontWeight = FontWeight.Bold,
-                    fontSize = 20.sp,
-                    textAlign = TextAlign.Center
+    ) {
+        Box(modifier = Modifier
+            .fillMaxSize()
+            .background(Color.DarkGray)
+        ) {
+            when (state.gameState) {
+                GameState.Menu -> MenuContent(
+                    onPlayGame = viewModel::onPlayGame,
                 )
-                
-                Spacer(modifier = Modifier.height(24.dp))
-
-                Button(onClick = viewModel::onClearUIError) {
-                    Text(text = stringResource(R.string.retry))
-                }
+                GameState.Game -> GameContent(
+                    sceneEvents = sceneEvents,
+                    currentStoryNode = state.currentStoryNode,
+                    storyState = state.storyState,
+                    onKaijuIntroduced = viewModel::onKaijuIntroduced,
+                    onSceneFinished = viewModel::onSceneFinished,
+                    onSceneChoiceSubmitted = viewModel::onSceneChoiceSubmitted,
+                    onGameRestart = viewModel::onGameRestart
+                )
             }
         }
     }

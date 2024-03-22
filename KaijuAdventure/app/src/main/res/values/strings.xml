@@ -24,4 +24,6 @@
     <string name="kaiju_adventure">Kaiju Adventure</string>
     <string name="start">Start</string>
     <string name="retry">Retry</string>
+    <string name="clear">Clear</string>
+    <string name="unknown_error_occurred">Unknown Error Occurred</string>
 </resources>

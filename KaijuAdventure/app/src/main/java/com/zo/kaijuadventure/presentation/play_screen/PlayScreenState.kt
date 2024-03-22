@@ -9,7 +9,8 @@ data class PlayScreenState(
     val currentStoryNode: StoryNode? = null,
     val storyState: StoryState = StoryState.Intro,
     val userChoices: List<StoryChoice> = listOf(),
-    val uiError: BaseError? = null
+    val uiError: BaseError? = null,
+    val loading: Boolean = false,
 )
 
 sealed class SceneEvents {

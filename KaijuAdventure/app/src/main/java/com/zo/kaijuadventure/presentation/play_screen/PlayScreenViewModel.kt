@@ -35,6 +35,7 @@ class PlayScreenViewModel(
     }
 
     private fun loadStory() {
+        state.value = state.value.copy(loading = true)
         viewModelScope.launch {
             storyRepository.queryStory().onLeft {
                 state.value = state.value.copy(uiError = it)
@@ -42,6 +43,7 @@ class PlayScreenViewModel(
                 state.value = state.value.copy(currentStoryNode = queriedStoryNode)
             }
         }
+        state.value = state.value.copy(loading = false)
     }
 
     fun onPlayGame() {
