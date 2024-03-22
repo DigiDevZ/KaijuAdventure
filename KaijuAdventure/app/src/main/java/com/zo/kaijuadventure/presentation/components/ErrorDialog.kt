@@ -23,13 +23,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-
-data class ErrorHandling(
-    val errorText: String,
-    val errorActionText: String,
-    val onErrorAction: () -> Unit
-)
-
+import com.zo.kaijuadventure.data.model.ErrorHandling
 
 @Composable
 fun ErrorDialog(

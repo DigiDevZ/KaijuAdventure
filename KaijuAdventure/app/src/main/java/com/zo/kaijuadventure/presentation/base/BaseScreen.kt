@@ -13,8 +13,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import com.zo.kaijuadventure.data.model.ErrorHandling
 import com.zo.kaijuadventure.presentation.components.ErrorDialog
-import com.zo.kaijuadventure.presentation.components.ErrorHandling
 import com.zo.kaijuadventure.presentation.components.LargeLoading
 import kotlinx.coroutines.delay
 

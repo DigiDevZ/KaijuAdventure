@@ -2,8 +2,12 @@ package com.zo.kaijuadventure.data.model
 
 import android.content.Context
 import com.zo.kaijuadventure.R
-import com.zo.kaijuadventure.presentation.components.ErrorHandling
 
+data class ErrorHandling(
+    val errorText: String,
+    val errorActionText: String,
+    val onErrorAction: () -> Unit
+)
 
 interface BaseError
 

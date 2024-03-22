@@ -27,7 +27,7 @@ class StoryRepositoryImpl(
                 firestore.collection(STORY_COLLECTION_PATH).document(GODZILLA_STORY).get().await()
             Json.decodeFromString<StoryNode>(result.data?.get(STORY_NODES_FIELD).toString())
         }.mapLeft {
-            QueryError(it.message ?: "Failed to load story, please check internet and try again.")
+            QueryError("Failed to load story, please check internet and try again.")
         }
 
 }
